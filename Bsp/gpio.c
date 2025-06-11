@@ -1,0 +1,163 @@
+#include "gpio.h"
+#include "gd32l23x.h"
+
+
+void gpio_o_init(void)
+{
+    gpio_mode_set(BLE_POWER_CONTROL_PORT, GPIO_MODE_OUTPUT, GPIO_PUPD_PULLUP, BLE_POWER_CONTROL_PIN);
+    GPIO_BC(BLE_POWER_CONTROL_PORT) = BLE_POWER_CONTROL_PIN;
+    
+    gpio_mode_set(HY31x_SCL_GPIO_PORT, GPIO_MODE_OUTPUT, GPIO_PUPD_NONE, HY31x_SCL_GPIO_PIN);
+    gpio_mode_set(HY31x_SDA_GPIO_PORT, GPIO_MODE_OUTPUT, GPIO_PUPD_NONE, HY31x_SDA_GPIO_PIN);
+    GPIO_BOP(HY31x_SCL_GPIO_PORT) = HY31x_SCL_GPIO_PIN;
+    GPIO_BOP(HY31x_SDA_GPIO_PORT) = HY31x_SDA_GPIO_PIN;
+    
+
+
+    gpio_mode_set(STSx_SCL_GPIO_PORT, GPIO_MODE_OUTPUT, GPIO_PUPD_NONE, STSx_SCL_GPIO_PIN);
+    gpio_mode_set(STSx_SDA_GPIO_PORT, GPIO_MODE_OUTPUT, GPIO_PUPD_NONE, STSx_SDA_GPIO_PIN);
+    GPIO_BOP(STSx_SCL_GPIO_PORT) = STSx_SCL_GPIO_PIN;
+    GPIO_BOP(STSx_SDA_GPIO_PORT) = STSx_SDA_GPIO_PIN;
+
+    gpio_mode_set(POWER_KEEP_GPIO_PORT, GPIO_MODE_OUTPUT, GPIO_PUPD_NONE, POWER_KEEP_GPIO_PIN);
+    GPIO_BOP(POWER_KEEP_GPIO_PORT) = POWER_KEEP_GPIO_PIN;
+
+
+    
+
+
+    gpio_mode_set(BLE_SEND_DERICTION_PORT, GPIO_MODE_OUTPUT, GPIO_PUPD_NONE, BLE_SEND_DERICTION_PIN);
+    GPIO_BC(BLE_SEND_DERICTION_PORT) = BLE_SEND_DERICTION_PIN;
+
+    gpio_mode_set(DEBUG_LED_GPIO_PORT, GPIO_MODE_OUTPUT, GPIO_PUPD_NONE, DEBUG_LED_GPIO_PIN);
+    GPIO_BC(DEBUG_LED_GPIO_PORT) = DEBUG_LED_GPIO_PIN;
+
+    gpio_mode_set(OLED_RESET_GPIO_PORT, GPIO_MODE_OUTPUT, GPIO_PUPD_NONE, OLED_RESET_GPIO_PIN);
+    GPIO_BOP(OLED_RESET_GPIO_PORT) = OLED_RESET_GPIO_PIN;
+
+
+    gpio_mode_set(TEMP_SCL_GPIO_PORT, GPIO_MODE_OUTPUT, GPIO_PUPD_NONE, TEMP_SCL_GPIO_PIN);
+    GPIO_BC(TEMP_SCL_GPIO_PORT) = TEMP_SCL_GPIO_PIN;
+
+    gpio_mode_set(TEMP_SDA_GPIO_PORT, GPIO_MODE_OUTPUT, GPIO_PUPD_NONE, TEMP_SDA_GPIO_PIN);
+    GPIO_BOP(TEMP_SDA_GPIO_PORT) = TEMP_SDA_GPIO_PIN;
+
+
+
+}
+
+void gpio_adc_init(void)
+{
+
+    gpio_mode_set(BAT_ADC_GPIO_PORT, GPIO_MODE_ANALOG, GPIO_PUPD_NONE, BAT_ADC_GPIO_PIN);
+
+    
+}
+
+
+void gpio_i_init(void)
+{
+
+    gpio_mode_set(KEY_GPIO_PORT, GPIO_MODE_INPUT, GPIO_PUPD_PULLUP, KEY_GPIO_PIN);
+
+
+    gpio_mode_set(BLE_WHE_CONNECT_SL_PORT, GPIO_MODE_INPUT, GPIO_PUPD_NONE, BLE_WHE_CONNECT_SL_PIN);
+
+
+    gpio_mode_set(BLE_BE_CONNECT_AS_SL_PORT, GPIO_MODE_INPUT, GPIO_PUPD_NONE, BLE_BE_CONNECT_AS_SL_PIN);
+
+
+}
+
+void gpio_af_init(void)
+{
+    gpio_af_set(UART_IIC_CONV_TXSDA_PORT, UART_IIC_CONV_AF, UART_IIC_CONV_TXSDA_PIN);
+    gpio_af_set(UART_IIC_CONV_RXSCL_PORT, UART_IIC_CONV_AF, UART_IIC_CONV_RXSCL_PIN);
+
+    /* configure USART Tx as alternate function push-pull */
+    gpio_mode_set(UART_IIC_CONV_TXSDA_PORT, GPIO_MODE_AF, GPIO_PUPD_PULLUP, UART_IIC_CONV_TXSDA_PIN);
+    gpio_output_options_set(UART_IIC_CONV_TXSDA_PORT, GPIO_OTYPE_PP, GPIO_OSPEED_10MHZ, UART_IIC_CONV_TXSDA_PIN);
+
+    /* configure USART Rx as alternate function push-pull */
+    gpio_mode_set(UART_IIC_CONV_RXSCL_PORT, GPIO_MODE_AF, GPIO_PUPD_PULLUP, UART_IIC_CONV_RXSCL_PIN);
+    gpio_output_options_set(UART_IIC_CONV_RXSCL_PORT, GPIO_OTYPE_PP, GPIO_OSPEED_10MHZ, UART_IIC_CONV_RXSCL_PIN);
+
+    
+
+    /* connect port to LPUART TX */
+    gpio_af_set(MCU_TO_DEBUG_TX_PORT, MCU_TO_DEBUG_AF, MCU_TO_DEBUG_TX_PIN);
+    /* connect port to LPUART RX */
+    gpio_af_set(MCU_TO_DEBUG_RX_PORT, MCU_TO_DEBUG_AF, MCU_TO_DEBUG_RX_PIN);
+
+    /* configure LPUART TX as alternate function push-pull */
+    gpio_mode_set(MCU_TO_DEBUG_TX_PORT, GPIO_MODE_AF, GPIO_PUPD_PULLUP, MCU_TO_DEBUG_TX_PIN);
+    gpio_output_options_set(MCU_TO_DEBUG_TX_PORT, GPIO_OTYPE_PP, GPIO_OSPEED_10MHZ, MCU_TO_DEBUG_TX_PIN);
+
+    /* configure LPUART RX as alternate function push-pull */
+    gpio_mode_set(MCU_TO_DEBUG_RX_PORT, GPIO_MODE_AF, GPIO_PUPD_PULLUP, MCU_TO_DEBUG_RX_PIN);
+    gpio_output_options_set(MCU_TO_DEBUG_RX_PORT, GPIO_OTYPE_PP, GPIO_OSPEED_10MHZ, MCU_TO_DEBUG_RX_PIN);
+
+
+
+    gpio_af_set(MCU_TO_BLE_TX_PORT, MCU_TO_BLE_AF, MCU_TO_BLE_TX_PIN);
+    gpio_af_set(MCU_TO_BLE_RX_PORT, MCU_TO_BLE_AF, MCU_TO_BLE_RX_PIN);
+
+    /* configure USART Tx as alternate function push-pull */
+    gpio_mode_set(MCU_TO_BLE_TX_PORT, GPIO_MODE_AF, GPIO_PUPD_PULLUP, MCU_TO_BLE_TX_PIN);
+    gpio_output_options_set(MCU_TO_BLE_TX_PORT, GPIO_OTYPE_PP, GPIO_OSPEED_10MHZ, MCU_TO_BLE_TX_PIN);
+
+    /* configure USART Rx as alternate function push-pull */
+    gpio_mode_set(MCU_TO_BLE_RX_PORT, GPIO_MODE_AF, GPIO_PUPD_PULLUP, MCU_TO_BLE_RX_PIN);
+    gpio_output_options_set(MCU_TO_BLE_RX_PORT, GPIO_OTYPE_PP, GPIO_OSPEED_10MHZ, MCU_TO_BLE_RX_PIN);
+
+
+    /* connect PB10 to I2C_SCL */
+    gpio_af_set(OLED_SCL_GPIO_PORT, OLED_AF, OLED_SCL_GPIO_PIN);
+    /* connect PB11 to I2C_SDA */
+    gpio_af_set(OLED_SDA_GPIO_PORT, OLED_AF, OLED_SDA_GPIO_PIN);
+    /* configure GPIO pins of I2C */
+    gpio_mode_set(OLED_SCL_GPIO_PORT, GPIO_MODE_AF, GPIO_PUPD_PULLUP, OLED_SCL_GPIO_PIN);
+    gpio_output_options_set(OLED_SCL_GPIO_PORT, GPIO_OTYPE_OD, GPIO_OSPEED_50MHZ, OLED_SCL_GPIO_PIN);
+    gpio_mode_set(OLED_SDA_GPIO_PORT, GPIO_MODE_AF, GPIO_PUPD_PULLUP, OLED_SDA_GPIO_PIN);
+    gpio_output_options_set(OLED_SDA_GPIO_PORT, GPIO_OTYPE_OD, GPIO_OSPEED_50MHZ, OLED_SDA_GPIO_PIN);
+
+    syscfg_high_current_enable(SYSCFG_PB8_HIGH_CURRENT);
+    syscfg_high_current_enable(SYSCFG_PB9_HIGH_CURRENT);
+
+    /* configure SPI0 GPIO : SCK/PB3, MISO/PA6, MOSI/PA7 */
+    gpio_af_set(XFLASH_SPI_SCK_PORT, XFLASH_AF,  XFLASH_SPI_SCK_PIN);
+    gpio_mode_set(XFLASH_SPI_SCK_PORT, GPIO_MODE_AF, GPIO_PUPD_NONE, XFLASH_SPI_SCK_PIN);
+    gpio_output_options_set(XFLASH_SPI_SCK_PORT, GPIO_OTYPE_PP, GPIO_OSPEED_50MHZ, XFLASH_SPI_SCK_PIN);
+    gpio_af_set(XFLASH_SPI_MISO_PORT, XFLASH_AF,  XFLASH_SPI_MISO_PIN);
+    gpio_mode_set(XFLASH_SPI_MISO_PORT, GPIO_MODE_AF, GPIO_PUPD_NONE, XFLASH_SPI_MISO_PIN);
+    gpio_af_set(XFLASH_SPI_MOSI_PORT, XFLASH_AF,  XFLASH_SPI_MOSI_PIN);
+    gpio_mode_set(XFLASH_SPI_MOSI_PORT, GPIO_MODE_AF, GPIO_PUPD_NONE, XFLASH_SPI_MOSI_PIN);
+    /* set GPIO PA4 as SPI0 NSS output */
+    gpio_mode_set(XFLASH_SPI_CS_PORT, GPIO_MODE_OUTPUT, GPIO_PUPD_NONE, XFLASH_SPI_CS_PIN);
+    gpio_output_options_set(XFLASH_SPI_CS_PORT, GPIO_OTYPE_PP, GPIO_OSPEED_50MHZ, XFLASH_SPI_CS_PIN);
+
+    gpio_output_options_set(XFLASH_SPI_MISO_PORT, GPIO_OTYPE_PP, GPIO_OSPEED_50MHZ, XFLASH_SPI_MISO_PIN);
+    gpio_output_options_set(XFLASH_SPI_MOSI_PORT, GPIO_OTYPE_PP, GPIO_OSPEED_50MHZ, XFLASH_SPI_MOSI_PIN);
+
+
+    /* configure pwm ch */
+    gpio_mode_set(RGB_R_GPIO_PORT, GPIO_MODE_AF, GPIO_PUPD_PULLUP, RGB_R_GPIO_PIN);
+    gpio_output_options_set(RGB_R_GPIO_PORT, GPIO_OTYPE_PP, GPIO_OSPEED_50MHZ, RGB_R_GPIO_PIN);
+    gpio_mode_set(RGB_G_GPIO_PORT, GPIO_MODE_AF, GPIO_PUPD_PULLUP, RGB_G_GPIO_PIN);
+    gpio_output_options_set(RGB_G_GPIO_PORT, GPIO_OTYPE_PP, GPIO_OSPEED_50MHZ, RGB_G_GPIO_PIN);
+    gpio_mode_set(RGB_B_GPIO_PORT, GPIO_MODE_AF, GPIO_PUPD_PULLUP, RGB_B_GPIO_PIN);
+    gpio_output_options_set(RGB_B_GPIO_PORT, GPIO_OTYPE_PP, GPIO_OSPEED_50MHZ, RGB_B_GPIO_PIN);
+    gpio_af_set(RGB_R_GPIO_PORT, RGB_AF, RGB_R_GPIO_PIN);
+    gpio_af_set(RGB_G_GPIO_PORT, RGB_AF, RGB_G_GPIO_PIN);
+    gpio_af_set(RGB_B_GPIO_PORT, RGB_AF, RGB_B_GPIO_PIN);
+}
+
+
+
+void bsp_gpio_init(void)
+{
+    gpio_o_init();
+    gpio_adc_init();
+    gpio_i_init();  
+    gpio_af_init();
+}
